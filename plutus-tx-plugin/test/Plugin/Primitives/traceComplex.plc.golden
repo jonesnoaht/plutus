@@ -9,6 +9,9 @@
         (vardecl True Bool) (vardecl False Bool)
       )
     )
+    (datatypebind
+      (datatype (tyvardecl Unit (type))  Unit_match (vardecl Unit Unit))
+    )
     (termbind
       (strict)
       (vardecl error (all a (type) (fun (con unit) a)))
@@ -17,10 +20,27 @@
     (termbind
       (strict)
       (vardecl traceError (all a (type) (fun (con string) a)))
-      (abs a (type) (lam str (con string) [ { error a } (con unit ()) ]))
-    )
-    (datatypebind
-      (datatype (tyvardecl Unit (type))  Unit_match (vardecl Unit Unit))
+      (abs
+        a
+        (type)
+        (lam
+          str
+          (con string)
+          [
+            { error a }
+            [
+              [
+                {
+                  [ Unit_match [ [ { (builtin trace) Unit } str ] Unit ] ]
+                  (fun Unit (con unit))
+                }
+                (lam thunk Unit (con unit ()))
+              ]
+              Unit
+            ]
+          ]
+        )
+      )
     )
     (lam
       ds

@@ -1,3 +1,4 @@
+{-# LANGUAGE BangPatterns #-}
 {-# OPTIONS_GHC -fno-omit-interface-pragmas #-}
 -- | Primitive names and functions for working with Plutus Core builtins.
 module PlutusTx.Builtins (

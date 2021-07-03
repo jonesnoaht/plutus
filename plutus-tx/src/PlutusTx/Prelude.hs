@@ -85,8 +85,8 @@ import           PlutusTx.Applicative as Applicative
 import           PlutusTx.Bool        as Bool
 import           PlutusTx.Builtins    (BuiltinString, ByteString, appendString, charToString, concatenate,
                                        dropByteString, emptyByteString, emptyString, encodeUtf8, equalsByteString,
-                                       equalsString, greaterThanByteString, lessThanByteString, sha2_256, sha3_256,
-                                       takeByteString, trace, verifySignature)
+                                       equalsString, error, greaterThanByteString, lessThanByteString, sha2_256,
+                                       sha3_256, takeByteString, trace, verifySignature)
 import qualified PlutusTx.Builtins    as Builtins
 import           PlutusTx.Either      as Either
 import           PlutusTx.Eq          as Eq
@@ -124,11 +124,6 @@ import           Prelude              as Prelude (maximum, minimum)
 -- $setup
 -- >>> :set -XNoImplicitPrelude
 -- >>> import PlutusTx.Prelude
-
-{-# INLINABLE error #-}
--- | Terminate the evaluation of the script with an error message.
-error :: () -> a
-error = Builtins.error
 
 {-# INLINABLE check #-}
 -- | Checks a 'Bool' and aborts if it is false.
