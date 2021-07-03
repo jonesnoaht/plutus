@@ -95,7 +95,7 @@ convertString :: CompiledCode Builtins.BuiltinString
 convertString = $$(compile [|| "test" ||])
 
 traceDirect :: CompiledCode ()
-traceDirect = $$(compile [|| Builtins.trace "test" ||])
+traceDirect = $$(compile [|| Builtins.trace "test" () ||])
 
 tracePrelude :: CompiledCode Integer
 tracePrelude = $$(compile [|| trace "test" (1::Integer) ||])

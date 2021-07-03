@@ -86,7 +86,7 @@ import           PlutusTx.Bool        as Bool
 import           PlutusTx.Builtins    (BuiltinString, ByteString, appendString, charToString, concatenate,
                                        dropByteString, emptyByteString, emptyString, encodeUtf8, equalsByteString,
                                        equalsString, greaterThanByteString, lessThanByteString, sha2_256, sha3_256,
-                                       takeByteString, verifySignature)
+                                       takeByteString, trace, verifySignature)
 import qualified PlutusTx.Builtins    as Builtins
 import           PlutusTx.Either      as Either
 import           PlutusTx.Eq          as Eq
@@ -134,14 +134,6 @@ error = Builtins.error
 -- | Checks a 'Bool' and aborts if it is false.
 check :: Bool -> ()
 check b = if b then () else error ()
-
-{-# INLINABLE trace #-}
--- | Emit the given string as a trace message before evaluating the argument.
-trace :: Builtins.BuiltinString -> a -> a
--- The builtin trace is just a side-effecting function that returns unit, so
--- we have to be careful to make sure it actually gets evaluated, and not
--- thrown away by GHC or the PIR compiler.
-trace str a = case Builtins.trace str of () -> a
 
 {-# INLINABLE traceError #-}
 -- | Log a message and then terminate the evaluation with an error.

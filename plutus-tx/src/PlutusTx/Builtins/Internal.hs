@@ -69,11 +69,11 @@ ifThenElse (BuiltinBool b) x y = if b then x else y
 UNIT
 -}
 
-newtype BuiltinUnit = BuiltinUnit ()
+data BuiltinUnit = BuiltinUnit ()
 
 {-# NOINLINE unitval #-}
 unitval :: BuiltinUnit
-unitval = coerce ()
+unitval = BuiltinUnit ()
 
 {-
 INTEGER
@@ -204,8 +204,8 @@ equalsString :: BuiltinString -> BuiltinString -> BuiltinBool
 equalsString = mustBeReplaced "equalsString"
 
 {-# NOINLINE trace #-}
-trace :: BuiltinString -> BuiltinUnit
-trace _ = coerce () --mustBeReplaced "trace"
+trace :: BuiltinString -> a -> a
+trace _ a = a
 
 {-# NOINLINE encodeUtf8 #-}
 encodeUtf8 :: BuiltinString -> BuiltinByteString

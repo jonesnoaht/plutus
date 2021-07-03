@@ -192,9 +192,9 @@ equalsString :: BuiltinString -> BuiltinString -> Bool
 equalsString x y = fromBuiltin (BI.equalsString x y)
 
 {-# INLINABLE trace #-}
--- | Logs the given 'String' to the evaluation log.
-trace :: BuiltinString -> ()
-trace s = fromBuiltin (BI.trace s)
+-- | Emit the given string as a trace message before evaluating the argument.
+trace :: BuiltinString -> a -> a
+trace = BI.trace
 
 {-# INLINABLE encodeUtf8 #-}
 -- | Convert a String into a ByteString.

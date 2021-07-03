@@ -2,7 +2,9 @@
 {-# LANGUAGE OverloadedStrings   #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TypeApplications    #-}
-{-# OPTIONS_GHC -fplugin PlutusTx.Plugin -fplugin-opt PlutusTx.Plugin:defer-errors -fplugin-opt PlutusTx.Plugin:debug-context #-}
+{-# OPTIONS_GHC -fplugin PlutusTx.Plugin #-}
+{-# OPTIONS_GHC -fplugin-opt PlutusTx.Plugin:defer-errors #-}
+{-# OPTIONS_GHC -fplugin-opt PlutusTx.Plugin:debug-context #-}
 
 module Plugin.Primitives.Spec where
 
@@ -55,6 +57,7 @@ primitives = testNested "Primitives" [
   , goldenUEval "decodeUtf8" [ getPlc bsDecode, liftProgram ("hello" :: Builtins.ByteString)]
   , goldenPir "verify" verify
   , goldenPir "trace" trace
+  , goldenPir "traceComplex" traceComplex
   , goldenPir "stringLiteral" stringLiteral
   , goldenPir "stringConvert" stringConvert
   , goldenUEval "equalsString" [ getPlc stringEquals, liftProgram ("hello" :: String), liftProgram ("hello" :: String)]
@@ -129,7 +132,10 @@ verify :: CompiledCode (Builtins.ByteString -> Builtins.ByteString -> Builtins.B
 verify = plc (Proxy @"verify") (\(x::Builtins.ByteString) (y::Builtins.ByteString) (z::Builtins.ByteString) -> Builtins.verifySignature x y z)
 
 trace :: CompiledCode (Builtins.BuiltinString -> ())
-trace = plc (Proxy @"trace") (\(x :: Builtins.BuiltinString) -> Builtins.trace x)
+trace = plc (Proxy @"trace") (\(x :: Builtins.BuiltinString) -> Builtins.trace x ())
+
+traceComplex :: CompiledCode (Bool -> ())
+traceComplex = plc (Proxy @"traceComplex") (\(b :: Bool) -> if b then P.trace "yes" () else P.traceError "no")
 
 stringLiteral :: CompiledCode (Builtins.BuiltinString)
 stringLiteral = plc (Proxy @"stringLiteral") ("abc"::Builtins.BuiltinString)

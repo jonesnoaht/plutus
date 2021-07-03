@@ -4,9 +4,6 @@
     (datatypebind
       (datatype (tyvardecl Unit (type))  Unit_match (vardecl Unit Unit))
     )
-    (termbind
-      (strict) (vardecl trace (fun (con string) Unit)) (lam s (con string) Unit)
-    )
-    trace
+    (lam ds (con string) [ [ { (builtin trace) Unit } ds ] Unit ])
   )
 )

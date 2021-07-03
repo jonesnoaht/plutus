@@ -1,0 +1,44 @@
+(program
+  (let
+    (nonrec)
+    (datatypebind
+      (datatype
+        (tyvardecl Bool (type))
+
+        Bool_match
+        (vardecl True Bool) (vardecl False Bool)
+      )
+    )
+    (termbind
+      (strict)
+      (vardecl error (all a (type) (fun (con unit) a)))
+      (abs a (type) (lam thunk (con unit) (error a)))
+    )
+    (termbind
+      (strict)
+      (vardecl traceError (all a (type) (fun (con string) a)))
+      (abs a (type) (lam str (con string) [ { error a } (con unit ()) ]))
+    )
+    (datatypebind
+      (datatype (tyvardecl Unit (type))  Unit_match (vardecl Unit Unit))
+    )
+    (lam
+      ds
+      Bool
+      [
+        [
+          [
+            { [ Bool_match ds ] (fun Unit Unit) }
+            (lam
+              thunk
+              Unit
+              [ [ { (builtin trace) Unit } (con string "yes") ] Unit ]
+            )
+          ]
+          (lam thunk Unit [ { traceError Unit } (con string "no") ])
+        ]
+        Unit
+      ]
+    )
+  )
+)
