@@ -4237,7 +4237,7 @@
                           (termbind
                             (strict)
                             (vardecl
-                              sverifySignedMessageConstraints
+                              scheckHashConstraints
                               (all o (type) (all i (type) [[Either SignedMessageCheckError] [[Tuple2 [Observation [[(lam k (type) (lam v (type) [List [[Tuple2 k] v]])) (con bytestring)] [[(lam k (type) (lam v (type) [List [[Tuple2 k] v]])) (con bytestring)] (con integer)]]]] [[TxConstraints i] o]]]))
                             )
                             (abs
@@ -4252,6 +4252,31 @@
                                     [[Tuple2 [Observation [[(lam k (type) (lam v (type) [List [[Tuple2 k] v]])) (con bytestring)] [[(lam k (type) (lam v (type) [List [[Tuple2 k] v]])) (con bytestring)] (con integer)]]]] [[TxConstraints i] o]]
                                   }
                                   DecodingError
+                                ]
+                              )
+                            )
+                          )
+                          (termbind
+                            (strict)
+                            (vardecl
+                              scheckHashConstraints
+                              (all o (type) (all i (type) [[Either SignedMessageCheckError] [[Tuple2 [Observation [[(lam k (type) (lam v (type) [List [[Tuple2 k] v]])) (con bytestring)] [[(lam k (type) (lam v (type) [List [[Tuple2 k] v]])) (con bytestring)] (con integer)]]]] [[TxConstraints i] o]]]))
+                            )
+                            (abs
+                              o
+                              (type)
+                              (abs
+                                i
+                                (type)
+                                [
+                                  [
+                                    {
+                                      (builtin trace)
+                                      [[Either SignedMessageCheckError] [[Tuple2 [Observation [[(lam k (type) (lam v (type) [List [[Tuple2 k] v]])) (con bytestring)] [[(lam k (type) (lam v (type) [List [[Tuple2 k] v]])) (con bytestring)] (con integer)]]]] [[TxConstraints i] o]]]
+                                    }
+                                    (con string "DecodingError")
+                                  ]
+                                  { { scheckHashConstraints o } i }
                                 ]
                               )
                             )
@@ -4463,7 +4488,7 @@
                                                           Unit
                                                           {
                                                             {
-                                                              sverifySignedMessageConstraints
+                                                              scheckHashConstraints
                                                               o
                                                             }
                                                             i
